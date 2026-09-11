@@ -1597,6 +1597,12 @@ width: 223px;
 		max-width: 100%;
 		flex: 1 1 100%;
 	}
+	.zf-tempContDiv input[type="text"],
+	.zf-tempContDiv input[type="tel"],
+	.zf-tempContDiv textarea,
+	.zf-form-sBox {
+		font-size: 16px;
+	}
 }
 
 /* ------------------ Contact Form Responsive Css Ends here -------------------- */
