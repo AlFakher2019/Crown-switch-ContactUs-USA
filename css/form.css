@@ -1606,3 +1606,30 @@ width: 223px;
 }
 
 /* ------------------ Contact Form Responsive Css Ends here -------------------- */
+
+
+/* ------------------ Grouped Reason dropdown Starts here ---------------------- */
+/* Main reasons are <optgroup> headings, sub-issues are the options beneath. */
+
+.cs-reasonSelect optgroup {
+	font-weight: 700;
+	font-style: normal;
+	color: #1a1a1a;
+}
+
+.cs-reasonSelect option {
+	font-weight: 400;
+	color: #1a1a1a;
+}
+
+/* ------------------ Grouped Reason dropdown Ends here ------------------------ */
+
+
+.zf-submitColor[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.zf-submitColor[disabled]:hover {
+	background: #e7e7ea;
+}

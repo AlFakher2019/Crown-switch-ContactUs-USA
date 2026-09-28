@@ -6,6 +6,7 @@
     <title>Contact us Crown Switch</title>
     <link href="css/form.css" rel="stylesheet" type="text/css">
     <script src="js/validation.js"></script>
+    <script src="js/contact-reason.js" defer></script>
 </head>
 
 <body class="zf-backgroundBg">
@@ -13,7 +14,8 @@
     <div class="zf-templateWidth">
         <form
             action='https://forms.zohopublic.com/airglobal/form/ContactusCrownSwitch/formperma/jL0W68m0hiJYsusS5BzS2orgeLNC_FO1tkowQTpE56A/htmlRecords/submit'
-            name='form' method='POST' onSubmit='javascript:document.charset="UTF-8"; return zf_ValidateAndSubmit();'
+            name='form' method='POST'
+            onSubmit='javascript:document.charset="UTF-8"; return cs_ValidateAndSubmit();'
             accept-charset='UTF-8' enctype='multipart/form-data' id='form'>
             <input type="hidden" name="zf_referrer_name"
                 value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
@@ -86,24 +88,28 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Groups and options are injected from CONTACT_REASONS in
+                             js/contact-reason.js. This select carries no name: the hidden
+                             inputs below are what gets posted, so a single visible choice
+                             fills both the reason and sub-issue fields. -->
                         <div class="zf-tempFrmWrapper zf-large">
-                            <label class="zf-labelName" for="Dropdown">Reason for Contact:<em class="zf-important">
-                                    *</em></label>
+                            <label class="zf-labelName" for="cs-reasonSelect">Reason for Contact:<em
+                                    class="zf-important"> *</em></label>
                             <div class="zf-tempContDiv">
-                                <select class="zf-form-sBox" id="Dropdown" name="Dropdown" checktype="c1"
-                                    aria-required="true" aria-describedby="Dropdown_error">
+                                <select class="zf-form-sBox cs-reasonSelect" id="cs-reasonSelect" aria-required="true"
+                                    aria-describedby="Dropdown_error">
                                     <option selected="true" value="-Select-"></option>
-                                    <option value="Become a Wholesaler/Retailer">Become a Wholesaler/Retailer</option>
-                                    <option value="General Support">General Support</option>
-                                    <option value="Device Support">Device Support</option>
-                                    <option value="Pods Support">Pods Support</option>
-                                    <option value="Brand Partnerships">Brand Partnerships</option>
-                                    <option value="Website Feedback">Website Feedback</option>
                                 </select>
                                 <p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Please select
                                     a reason for contact.</p>
                             </div>
                         </div>
+                        <input type="hidden" id="Dropdown" name="Dropdown" value="">
+                        <input type="hidden" id="Dropdown2" name="Dropdown2" value="">
+                        <input type="hidden" id="reasonId" name="reasonId" value="">
+                        <input type="hidden" id="reasonLabel" name="reasonLabel" value="">
+                        <input type="hidden" id="subIssueId" name="subIssueId" value="">
+                        <input type="hidden" id="subIssueLabel" name="subIssueLabel" value="">
                         <div class="zf-tempFrmWrapper zf-large">
                             <label class="zf-labelName" for="SingleLine3">Subject<em class="zf-important">
                                     *</em></label>
@@ -128,7 +134,7 @@
                 </div>
                 <ul>
                     <li class="zf-fmFooter">
-                        <button type="submit" class="zf-submitColor">Submit</button>
+                        <button type="submit" class="zf-submitColor" id="cs-submit" disabled>Submit</button>
                         <p class="zf-privacyNotice">We use the data you provide to respond to your inquiry. More
                             information on how we process your personal data can be found in our <a href="#"
                                 target="_blank" rel="noopener">Privacy Policy</a>.</p>
@@ -214,7 +220,7 @@
             watchRequiredText('Name_Last', 'Name_Last_error');
             watchEmail('Email', 'Email_error');
             watchPhone('PhoneNumber_countrycode', 'PhoneNumber_error');
-            watchDropdown('Dropdown', 'Dropdown_error');
+            watchDropdown('cs-reasonSelect', 'Dropdown_error');
             watchRequiredText('SingleLine3', 'SingleLine3_error');
         })();
     </script>
