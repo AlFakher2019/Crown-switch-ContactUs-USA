@@ -45,8 +45,11 @@
 		},
 		{ id: 'pods_support', label: 'Pods Support', showInDropdown: true, subOptions: [] },
 		{ id: 'brand_partnerships', label: 'Brand Partnerships', showInDropdown: true, subOptions: [] },
-		{ id: 'website_feedback', label: 'Website Feedback', showInDropdown: true, subOptions: [] },
-		{ id: 'follow_up', label: 'Follow Up', showInDropdown: true, subOptions: [] }
+		{ id: 'website_feedback', label: 'Website Feedback', showInDropdown: true, subOptions: [] }
+		// Disabled for now. To re-enable, uncomment this (add a comma after the line above)
+		// and uncomment the "Previous Ticket ID" block in index.html.
+		// The label must match the Zoho dropdown option value exactly.
+		// { id: 'follow_up', label: 'Follow Up', showInDropdown: true, subOptions: [] }
 	];
 
 	var HIDDEN_REASON_ID = 'device_support';
