@@ -45,10 +45,13 @@
 		},
 		{ id: 'pods_support', label: 'Pods Support', showInDropdown: true, subOptions: [] },
 		{ id: 'brand_partnerships', label: 'Brand Partnerships', showInDropdown: true, subOptions: [] },
-		{ id: 'website_feedback', label: 'Website Feedback', showInDropdown: true, subOptions: [] }
+		{ id: 'website_feedback', label: 'Website Feedback', showInDropdown: true, subOptions: [] },
+		{ id: 'follow_up', label: 'Follow Up', showInDropdown: true, subOptions: [] }
 	];
 
 	var HIDDEN_REASON_ID = 'device_support';
+	// Picking this reason reveals the "Previous Ticket ID" field and makes it required.
+	var FOLLOW_UP_REASON_ID = 'follow_up';
 	var PLACEHOLDER = '-Select-';
 	var KEY_SEPARATOR = '::';
 
@@ -141,12 +144,31 @@
 		els.subIssueLabel.value = state.subIssue ? state.subIssue.label : '';
 	}
 
+	function isFollowUp() {
+		return !!state.reason && state.reason.id === FOLLOW_UP_REASON_ID;
+	}
+
+	// A disabled input is not posted, so the ticket ID is only sent for follow-ups.
+	function toggleTicketField() {
+		if (!els.ticketWrapper) { return; }
+		var show = isFollowUp();
+		els.ticketWrapper.style.display = show ? '' : 'none';
+		els.ticketInput.disabled = !show;
+		els.ticketInput.required = show;
+		els.ticketInput.setAttribute('aria-required', show ? 'true' : 'false');
+		if (!show) {
+			els.ticketInput.value = '';
+			els.ticketError.style.display = 'none';
+		}
+	}
+
 	function onChange() {
 		var selection = parseSelection(els.select.value);
 		state.reason = selection.reason;
 		state.subIssue = selection.subIssue;
 
 		syncHiddenFields();
+		toggleTicketField();
 		showError(false);
 		els.submit.disabled = !state.reason;
 	}
@@ -175,6 +197,12 @@
 			return false;
 		}
 
+		if (isFollowUp() && els.ticketInput.value.replace(/^\s+|\s+$/g, '') === '') {
+			els.ticketError.style.display = 'block';
+			els.ticketInput.focus();
+			return false;
+		}
+
 		syncHiddenFields();
 		return true;
 	}
@@ -191,7 +219,10 @@
 			reasonLabel: byId('reasonLabel'),
 			subIssueId: byId('subIssueId'),
 			subIssueLabel: byId('subIssueLabel'),
-			submit: byId('cs-submit')
+			submit: byId('cs-submit'),
+			ticketWrapper: byId('cs-ticketWrapper'),
+			ticketInput: byId('SingleLine4'),
+			ticketError: byId('SingleLine4_error')
 		};
 
 		if (!els.select) { return; }
@@ -212,8 +243,11 @@
 	};
 
 	// Runs Zoho's own field validation first, then the reason rules.
+	// Both run every time so all errors show at once.
 	window.cs_ValidateAndSubmit = function () {
-		return zf_ValidateAndSubmit() && validate();
+		var zohoOk = zf_ValidateAndSubmit();
+		var reasonOk = validate();
+		return zohoOk && reasonOk;
 	};
 
 	if (document.readyState === 'loading') {

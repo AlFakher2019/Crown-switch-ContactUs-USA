@@ -104,6 +104,19 @@
                                     a reason for contact.</p>
                             </div>
                         </div>
+                        <!-- Shown and required only when "Follow up" is the chosen reason
+                             (toggled in js/contact-reason.js). -->
+                        <div class="zf-tempFrmWrapper zf-large" id="cs-ticketWrapper" style="display: none;">
+                            <label class="zf-labelName" for="SingleLine4">Previous Ticket ID<em
+                                    class="zf-important"> *</em></label>
+                            <div class="zf-tempContDiv">
+                                <input type="text" id="SingleLine4" name="SingleLine4" checktype="c1" value=""
+                                    maxlength="255" fieldType=1 aria-describedby="SingleLine4_error"
+                                    placeholder="" disabled />
+                                <p id="SingleLine4_error" class="zf-errorMessage" style="display: none;">Please
+                                    enter your previous ticket ID.</p>
+                            </div>
+                        </div>
                         <input type="hidden" id="Dropdown" name="Dropdown" value="">
                         <input type="hidden" id="Dropdown2" name="Dropdown2" value="">
                         <input type="hidden" id="reasonId" name="reasonId" value="">
@@ -147,13 +160,16 @@
         var zf_DateRegex = new RegExp(dateAndMonthRegexFormateArray[0]);
         var zf_MonthYearRegex = new RegExp(dateAndMonthRegexFormateArray[1]);
         var zf_MandArray = ["Name_First", "Name_Last", "Email", "Dropdown", "SingleLine3"];
-        var zf_FieldArray = ["Name_First", "Name_Last", "Email", "PhoneNumber_countrycode", "Dropdown", "SingleLine3", "MultiLine"];
+        // SingleLine4 (Previous Ticket ID) is required only for "Follow up", so it is
+        // not in zf_MandArray; js/contact-reason.js enforces it conditionally.
+        var zf_FieldArray = ["Name_First", "Name_Last", "Email", "PhoneNumber_countrycode", "Dropdown", "SingleLine4", "SingleLine3", "MultiLine"];
         var zf_ErrorIdMap = {
             "Name_First": "Name_First_error",
             "Name_Last": "Name_Last_error",
             "Email": "Email_error",
             "PhoneNumber_countrycode": "PhoneNumber_error",
             "Dropdown": "Dropdown_error",
+            "SingleLine4": "SingleLine4_error",
             "SingleLine3": "SingleLine3_error",
             "MultiLine": "MultiLine_error"
         };
@@ -222,6 +238,7 @@
             watchPhone('PhoneNumber_countrycode', 'PhoneNumber_error');
             watchDropdown('cs-reasonSelect', 'Dropdown_error');
             watchRequiredText('SingleLine3', 'SingleLine3_error');
+            watchRequiredText('SingleLine4', 'SingleLine4_error');
         })();
     </script>
 </body></html>
